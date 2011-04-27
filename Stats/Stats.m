@@ -46,7 +46,6 @@
               __FUNCTION__, strerror(errno));
     }
     
-    // 物理メモリの使用量(byte) - Activity MonitorのReal Memoryに該当
     u_int rss = t_info.resident_size;
     
     self.text = [NSString stringWithFormat:@"%u", rss];
