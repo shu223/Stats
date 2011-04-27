@@ -1,17 +1,16 @@
 //
-//  States.m
-//  KOF
+//  Stats.m
 //
-//  Created by shuichi on 11/04/28.
+//  Created by shu223 on 11/04/28.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "States.h"
+#import "Stats.h"
 #import <mach/mach.h>
 
 #define kTimerInterval 1.0
 
-@implementation States
+@implementation Stats
 
 @synthesize timer;
 

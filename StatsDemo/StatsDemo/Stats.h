@@ -1,15 +1,14 @@
 //
-//  States.h
-//  KOF
+//  Stats.h
 //
-//  Created by shuichi on 11/04/28.
+//  Created by shu223 on 11/04/28.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 
-@interface States : UILabel {
+@interface Stats : UILabel {
 
     NSTimer *timer;
 }
