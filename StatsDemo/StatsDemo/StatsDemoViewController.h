@@ -7,12 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Stats.h"
 
 @interface StatsDemoViewController : UIViewController {
-    Stats *stats;   
 }
-@property (nonatomic, retain) Stats *stats;
 - (IBAction)pressBtn:(UIButton *)sender;
 
 @end

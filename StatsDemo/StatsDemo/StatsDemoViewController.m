@@ -7,15 +7,13 @@
 //
 
 #import "StatsDemoViewController.h"
+#import "StatsDemoAppDelegate.h"
 
 @implementation StatsDemoViewController
-
-@synthesize stats;
 
 
 - (void)dealloc
 {
-    self.stats = nil;
     [super dealloc];
 }
 
@@ -30,8 +28,6 @@
 {
     [super viewDidLoad];
 
-    self.stats = [[[Stats alloc] initWithFrame:CGRectMake(10, 10, 100.0, 60.0)] autorelease];
-    [self.view addSubview:stats];
 }
 
 - (void)viewDidUnload
@@ -59,6 +55,8 @@
         }
     }
     sender.selected = !sender.selected;
+    
+    [[(StatsDemoAppDelegate *)[[UIApplication sharedApplication] delegate] stats] printHierarchyInApp];
 }
 
 

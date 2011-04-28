@@ -7,15 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Stats.h"
 
 @class StatsDemoViewController;
 
 @interface StatsDemoAppDelegate : NSObject <UIApplicationDelegate> {
-
+    Stats *stats;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain) IBOutlet StatsDemoViewController *viewController;
+
+@property (nonatomic, retain) Stats *stats;
 
 @end
