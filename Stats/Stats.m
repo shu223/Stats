@@ -114,9 +114,8 @@
 }
 
 - (int)countSubviewsInView:(UIView *)view {
-    NSArray *subviews = [view subviews];
     int cnt = 0;
-    for (UIView *subview in subviews) {
+    for (UIView *subview in [view subviews]) {
         cnt++;
         if ([[subview subviews] count] > 0) {
             cnt += [self countSubviewsInView:subview];
@@ -140,7 +139,7 @@
 
 - (void)printHierarchyInView:(UIView *)view level:(NSInteger)level {
     for (UIView *subview in view.subviews) {
-        NSLog(@"%d:%@ %@", level, NSStringFromClass(view.class), NSStringFromCGRect(view.frame));
+        NSLog(@"%d:%@ %@", level, NSStringFromClass(subview.class), NSStringFromCGRect(subview.frame));
         if ([[subview subviews] count] > 0) {
             [self printHierarchyInView:subview level:level+1];
         }
