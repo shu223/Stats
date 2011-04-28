@@ -16,6 +16,6 @@
 }
 @property (nonatomic, retain) NSTimer *timer;
 - (void)printHierarchyInApp;
-- (void)printHierarchyInView:(UIView *)view level:(NSInteger)level;
+- (void)printHierarchyInView:(UIView *)view;
 
 @end
