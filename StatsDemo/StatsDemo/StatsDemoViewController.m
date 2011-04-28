@@ -2,7 +2,7 @@
 //  StatsDemoViewController.m
 //  StatsDemo
 //
-//  Created by shuichi on 11/04/28.
+//  Created by shu223 on 11/04/28.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -10,12 +10,12 @@
 
 @implementation StatsDemoViewController
 
-@synthesize processInfoLabel;
+@synthesize stats;
 
 
 - (void)dealloc
 {
-    self.processInfoLabel = nil;
+    self.stats = nil;
     [super dealloc];
 }
 
@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
 
-    self.processInfoLabel = [[[States alloc] initWithFrame:CGRectMake(10, 10, 100.0, 60.0)] autorelease];
-    [self.view addSubview:processInfoLabel];
+    self.stats = [[[Stats alloc] initWithFrame:CGRectMake(10, 10, 100.0, 60.0)] autorelease];
+    [self.view addSubview:stats];
 }
 
 - (void)viewDidUnload

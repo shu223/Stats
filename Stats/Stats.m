@@ -9,6 +9,13 @@
 #import <mach/mach.h>
 
 #define kTimerInterval 1.0
+#define tval2msec(tval) ((tval.seconds * 1000) + (tval.microseconds / 1000))
+
+
+@interface Stats (Private)
+- (int)countSubviewsInApp;
+@end
+
 
 @implementation Stats
 
@@ -22,10 +29,12 @@
         self.backgroundColor = [UIColor blackColor];
         self.alpha = 0.7;
         self.textColor = [UIColor whiteColor];
-        self.font = [UIFont systemFontOfSize:10.0f];
-        self.textAlignment = UITextAlignmentCenter;
+        self.font = [UIFont fontWithName:@"Courier" size:10.0f];
+        self.textAlignment = UITextAlignmentLeft;
+        self.numberOfLines = 0;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:kTimerInterval target:self selector:@selector(timerHandler:) userInfo:nil repeats:YES];
         [self.timer fire];
+        lastUserTime = 0;
     }
     return self;
 }
@@ -44,15 +53,67 @@
     {
         NSLog(@"%s(): Error in task_info(): %s",
               __FUNCTION__, strerror(errno));
+    }    
+
+    // メモリ使用量(bytes)
+    vm_size_t rss = t_info.resident_size;
+    
+    
+    // 実行中のスレッドのCPU使用時間
+    struct task_thread_times_info tti;
+    t_info_count = TASK_THREAD_TIMES_INFO_COUNT;
+    kern_return_t status = task_info(current_task(), TASK_THREAD_TIMES_INFO,
+                                     (task_info_t)&tti, &t_info_count);
+    if (status != KERN_SUCCESS) {
+        NSLog(@"%s(): Error in task_info(): %s",
+              __FUNCTION__, strerror(errno));
+        return;
     }
     
-    u_int rss = t_info.resident_size;
+    uint64_t userTime   = tval2msec(tti.user_time);
+    int64_t userTimePerSec = ((int64_t)userTime - lastUserTime) / kTimerInterval;
+    int64_t rssPerSec = ((int64_t)rss - lastRss) / kTimerInterval;
+    lastUserTime = userTime;
+    lastRss = rss;
     
-    self.text = [NSString stringWithFormat:@"%u", rss];
+    self.text = [NSString stringWithFormat:@" MEM:%qi[kB]\n  %u[kB]\n CPU:%qi[ms]\n Views:%d",
+                 rssPerSec / 1000, rss / 1000, userTimePerSec, [self countSubviewsInApp]];
 }
+
+
+
+#pragma mark -------------------------------------------------------------------
+#pragma mark Handler
 
 - (void)timerHandler:(NSTimer *)timer {
     [self updateProcessInfo];
+}
+
+
+#pragma mark -------------------------------------------------------------------
+#pragma Private
+
+- (int)countSubviewsInView:(UIView *)view {
+    NSArray *subviews = [view subviews];
+    int cnt = [subviews count];
+    for (UIView *subview in subviews) {
+        if ([subview subviews] > 0) {
+            cnt += [self countSubviewsInView:subview];
+        }
+    }
+    return cnt;
+}
+
+- (int)countSubviewsInApp {
+    int cnt = 0;
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+    for (UIWindow *aWindow in windows) {
+        for (UIView *aView in [aWindow subviews]) {
+            cnt += [self countSubviewsInView:aView];
+        }
+    }
+    
+    return cnt;
 }
 
 @end
