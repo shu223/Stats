@@ -13,7 +13,9 @@
 
 
 @interface Stats (Private)
+- (void)updateStates;
 - (int)countSubviewsInApp;
+- (void)printHierarchyInView:(UIView *)view level:(NSInteger)level;
 @end
 
 
@@ -45,7 +47,38 @@
     [super dealloc];
 }
 
-- (void)updateProcessInfo {
+
+#pragma mark -------------------------------------------------------------------
+#pragma mark Public
+
+- (void)printHierarchyInApp {
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+    for (UIWindow *aWindow in windows) {
+        for (UIView *aView in [aWindow subviews]) {
+            NSLog(@"0:%@ %@", NSStringFromClass(aView.class), NSStringFromCGRect(aView.frame));
+            [self printHierarchyInView:aView level:1];
+        }
+    }
+}
+
+- (void)printHierarchyInView:(UIView *)view {
+    [self printHierarchyInView:view level:0];
+}
+
+
+
+#pragma mark -------------------------------------------------------------------
+#pragma mark Handler
+
+- (void)timerHandler:(NSTimer *)timer {
+    [self updateStates];
+}
+
+
+#pragma mark -------------------------------------------------------------------
+#pragma Private
+
+- (void)updateStates {
     struct task_basic_info t_info;
     mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
     
@@ -54,7 +87,7 @@
         NSLog(@"%s(): Error in task_info(): %s",
               __FUNCTION__, strerror(errno));
     }    
-
+    
     // メモリ使用量(bytes)
     vm_size_t rss = t_info.resident_size;
     
@@ -80,24 +113,12 @@
                  rssPerSec / 1000, rss / 1000, userTimePerSec, [self countSubviewsInApp]];
 }
 
-
-
-#pragma mark -------------------------------------------------------------------
-#pragma mark Handler
-
-- (void)timerHandler:(NSTimer *)timer {
-    [self updateProcessInfo];
-}
-
-
-#pragma mark -------------------------------------------------------------------
-#pragma Private
-
 - (int)countSubviewsInView:(UIView *)view {
     NSArray *subviews = [view subviews];
-    int cnt = [subviews count];
+    int cnt = 0;
     for (UIView *subview in subviews) {
-        if ([subview subviews] > 0) {
+        cnt++;
+        if ([[subview subviews] count] > 0) {
             cnt += [self countSubviewsInView:subview];
         }
     }
@@ -109,11 +130,21 @@
     NSArray *windows = [[UIApplication sharedApplication] windows];
     for (UIWindow *aWindow in windows) {
         for (UIView *aView in [aWindow subviews]) {
+            cnt++;
             cnt += [self countSubviewsInView:aView];
         }
     }
     
     return cnt;
+}
+
+- (void)printHierarchyInView:(UIView *)view level:(NSInteger)level {
+    for (UIView *subview in view.subviews) {
+        NSLog(@"%d:%@ %@", level, NSStringFromClass(view.class), NSStringFromCGRect(view.frame));
+        if ([[subview subviews] count] > 0) {
+            [self printHierarchyInView:subview level:level+1];
+        }
+    }
 }
 
 @end

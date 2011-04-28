@@ -15,6 +15,7 @@
     vm_size_t lastRss;
 }
 @property (nonatomic, retain) NSTimer *timer;
-- (void)updateProcessInfo;
+- (void)printHierarchyInApp;
+- (void)printHierarchyInView:(UIView *)view level:(NSInteger)level;
 
 @end
