@@ -11,14 +11,10 @@
 
 @class StatsDemoViewController;
 
-@interface StatsDemoAppDelegate : NSObject <UIApplicationDelegate> {
-    Stats *stats;
-}
+@interface StatsDemoAppDelegate : NSObject <UIApplicationDelegate>
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-
-@property (nonatomic, retain) IBOutlet StatsDemoViewController *viewController;
-
-@property (nonatomic, retain) Stats *stats;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) StatsDemoViewController *viewController;
+@property (nonatomic, strong) Stats *stats;
 
 @end

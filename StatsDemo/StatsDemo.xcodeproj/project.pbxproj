@@ -17,7 +17,8 @@
 		8A4771A2136883F000218250 /* StatsDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4771A1136883F000218250 /* StatsDemoViewController.m */; };
 		8A4771A5136883F000218250 /* StatsDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A4771A3136883F000218250 /* StatsDemoViewController.xib */; };
 		8A4771AD1368853B00218250 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4771AC1368853B00218250 /* Stats.m */; };
-		8A4771B2136889CE00218250 /* shu223_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4771B1136889CE00218250 /* shu223_icon.png */; };
+		8A693AFA171105A600477FC5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A693AF9171105A600477FC5 /* Default-568h@2x.png */; };
+		8A693AFC171110DB00477FC5 /* m24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A693AFB171110DB00477FC5 /* m24@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,9 +36,10 @@
 		8A4771A0136883F000218250 /* StatsDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatsDemoViewController.h; sourceTree = "<group>"; };
 		8A4771A1136883F000218250 /* StatsDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatsDemoViewController.m; sourceTree = "<group>"; };
 		8A4771A4136883F000218250 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/StatsDemoViewController.xib; sourceTree = "<group>"; };
-		8A4771AB1368853B00218250 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Stats.h; sourceTree = "<group>"; };
+		8A4771AB1368853B00218250 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
 		8A4771AC1368853B00218250 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
-		8A4771B1136889CE00218250 /* shu223_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shu223_icon.png; sourceTree = "<group>"; };
+		8A693AF9171105A600477FC5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8A693AFB171110DB00477FC5 /* m24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "m24@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 		8A47717C136883F000218250 = {
 			isa = PBXGroup;
 			children = (
+				8A693AF9171105A600477FC5 /* Default-568h@2x.png */,
 				8A4771AF136889CE00218250 /* Resources */,
 				8A477191136883F000218250 /* StatsDemo */,
 				8A47718A136883F000218250 /* Frameworks */,
@@ -128,7 +131,7 @@
 		8A4771B0136889CE00218250 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				8A4771B1136889CE00218250 /* shu223_icon.png */,
+				8A693AFB171110DB00477FC5 /* m24@2x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -183,7 +186,8 @@
 				8A477196136883F000218250 /* InfoPlist.strings in Resources */,
 				8A47719F136883F000218250 /* MainWindow.xib in Resources */,
 				8A4771A5136883F000218250 /* StatsDemoViewController.xib in Resources */,
-				8A4771B2136889CE00218250 /* shu223_icon.png in Resources */,
+				8A693AFA171105A600477FC5 /* Default-568h@2x.png in Resources */,
+				8A693AFC171110DB00477FC5 /* m24@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,15 +239,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -252,12 +257,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};

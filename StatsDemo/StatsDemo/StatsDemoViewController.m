@@ -9,13 +9,8 @@
 #import "StatsDemoViewController.h"
 #import "StatsDemoAppDelegate.h"
 
+
 @implementation StatsDemoViewController
-
-
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -27,7 +22,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
 }
 
 - (void)viewDidUnload
@@ -40,12 +34,13 @@
 #pragma mark IBAction
 
 - (IBAction)pressBtn:(UIButton *)sender {
+    
     if (!sender.selected) {
-        UIImage *image = [UIImage imageNamed:@"shu223_icon.png"];
+        
+        UIImage *image = [UIImage imageNamed:@"m24.png"];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         imageView.center = self.view.center;
         [self.view addSubview:imageView];
-        [imageView release];
     }
     else {
         for (UIView *aView in self.view.subviews) {
@@ -56,7 +51,7 @@
     }
     sender.selected = !sender.selected;
     
-    [[(StatsDemoAppDelegate *)[[UIApplication sharedApplication] delegate] stats] printHierarchyInApp];
+    [Stats printHierarchyInApp];
 }
 
 

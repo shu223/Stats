@@ -7,16 +7,10 @@
 //
 
 #import "StatsDemoAppDelegate.h"
-
 #import "StatsDemoViewController.h"
 
+
 @implementation StatsDemoAppDelegate
-
-
-@synthesize window=_window;
-@synthesize viewController=_viewController;
-@synthesize stats;
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -25,8 +19,8 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
 
-    self.stats = [[[Stats alloc] initWithFrame:CGRectMake(10, 30, 100.0, 60.0)] autorelease];
-    [self.window addSubview:stats];
+    self.stats = [[Stats alloc] initWithFrame:CGRectMake(20, 20, 100.0, 60.0)];
+    [self.window addSubview:self.stats];
 
     return YES;
 }
@@ -68,14 +62,6 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
-}
-
-- (void)dealloc
-{
-    self.stats = nil;
-    [_window release];
-    [_viewController release];
-    [super dealloc];
 }
 
 @end
