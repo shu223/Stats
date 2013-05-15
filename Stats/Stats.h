@@ -8,13 +8,8 @@
 #import <UIKit/UIKit.h>
 
 
-@interface Stats : UILabel {
+@interface Stats : UILabel
 
-    NSTimer *timer;
-    uint64_t lastUserTime;
-    vm_size_t lastRss;
-}
-@property (nonatomic, retain) NSTimer *timer;
 - (void)printHierarchyInApp;
 - (void)printHierarchyInView:(UIView *)view;
 
