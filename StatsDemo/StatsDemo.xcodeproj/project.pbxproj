@@ -16,9 +16,9 @@
 		8A47719F136883F000218250 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A47719D136883F000218250 /* MainWindow.xib */; };
 		8A4771A2136883F000218250 /* StatsDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4771A1136883F000218250 /* StatsDemoViewController.m */; };
 		8A4771A5136883F000218250 /* StatsDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A4771A3136883F000218250 /* StatsDemoViewController.xib */; };
-		8A4771AD1368853B00218250 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4771AC1368853B00218250 /* Stats.m */; };
 		8A693AFA171105A600477FC5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A693AF9171105A600477FC5 /* Default-568h@2x.png */; };
 		8A693AFC171110DB00477FC5 /* m24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A693AFB171110DB00477FC5 /* m24@2x.png */; };
+		8A7457D9174425BD00398299 /* Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7457D8174425BD00398299 /* Stats.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,10 +36,10 @@
 		8A4771A0136883F000218250 /* StatsDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatsDemoViewController.h; sourceTree = "<group>"; };
 		8A4771A1136883F000218250 /* StatsDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatsDemoViewController.m; sourceTree = "<group>"; };
 		8A4771A4136883F000218250 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/StatsDemoViewController.xib; sourceTree = "<group>"; };
-		8A4771AB1368853B00218250 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
-		8A4771AC1368853B00218250 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
-		8A693AF9171105A600477FC5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8A693AF9171105A600477FC5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../Default-568h@2x.png"; sourceTree = "<group>"; };
 		8A693AFB171110DB00477FC5 /* m24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "m24@2x.png"; sourceTree = "<group>"; };
+		8A7457D7174425BD00398299 /* Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stats.h; sourceTree = "<group>"; };
+		8A7457D8174425BD00398299 /* Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stats.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +59,8 @@
 		8A47717C136883F000218250 = {
 			isa = PBXGroup;
 			children = (
-				8A693AF9171105A600477FC5 /* Default-568h@2x.png */,
 				8A4771AF136889CE00218250 /* Resources */,
+				8A7457D6174425BD00398299 /* Stats */,
 				8A477191136883F000218250 /* StatsDemo */,
 				8A47718A136883F000218250 /* Frameworks */,
 				8A477188136883F000218250 /* Products */,
@@ -88,7 +88,6 @@
 		8A477191136883F000218250 /* StatsDemo */ = {
 			isa = PBXGroup;
 			children = (
-				8A4771AE1368854E00218250 /* Stats */,
 				8A47719A136883F000218250 /* StatsDemoAppDelegate.h */,
 				8A47719B136883F000218250 /* StatsDemoAppDelegate.m */,
 				8A47719D136883F000218250 /* MainWindow.xib */,
@@ -111,15 +110,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8A4771AE1368854E00218250 /* Stats */ = {
-			isa = PBXGroup;
-			children = (
-				8A4771AB1368853B00218250 /* Stats.h */,
-				8A4771AC1368853B00218250 /* Stats.m */,
-			);
-			name = Stats;
-			sourceTree = "<group>";
-		};
 		8A4771AF136889CE00218250 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,9 +121,20 @@
 		8A4771B0136889CE00218250 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				8A693AF9171105A600477FC5 /* Default-568h@2x.png */,
 				8A693AFB171110DB00477FC5 /* m24@2x.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		8A7457D6174425BD00398299 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				8A7457D7174425BD00398299 /* Stats.h */,
+				8A7457D8174425BD00398299 /* Stats.m */,
+			);
+			name = Stats;
+			path = ../Stats;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,7 +202,7 @@
 				8A477199136883F000218250 /* main.m in Sources */,
 				8A47719C136883F000218250 /* StatsDemoAppDelegate.m in Sources */,
 				8A4771A2136883F000218250 /* StatsDemoViewController.m in Sources */,
-				8A4771AD1368853B00218250 /* Stats.m in Sources */,
+				8A7457D9174425BD00398299 /* Stats.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
