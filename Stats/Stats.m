@@ -32,7 +32,7 @@
         self.alpha = 0.7;
         self.textColor = [UIColor whiteColor];
         self.font = [UIFont fontWithName:@"Courier" size:10.0f];
-        self.textAlignment = UITextAlignmentLeft;
+        self.textAlignment = NSTextAlignmentLeft;
         self.numberOfLines = 0;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:kTimerInterval
                                                       target:self
@@ -86,7 +86,7 @@
     lastUserTime = userTime;
     lastRss = rss;
     
-    self.text = [NSString stringWithFormat:@" MEM:%qi[kB]\n  %u[kB]\n CPU:%qi[ms]\n Views:%d",
+    self.text = [NSString stringWithFormat:@" MEM:%qi[kB]\n  %lu[kB]\n CPU:%qi[ms]\n Views:%d",
                  rssPerSec / 1000, rss / 1000, userTimePerSec, [self countSubviewsInApp]];
 }
 
@@ -126,7 +126,7 @@
 - (void)printHierarchyInView:(UIView *)view level:(NSInteger)level {
     for (UIView *subview in view.subviews) {
         
-        NSLog(@"%d:%@ %@", level,
+        NSLog(@"%ld:%@ %@", (long)level,
               NSStringFromClass(subview.class),
               NSStringFromCGRect(subview.frame));
         
