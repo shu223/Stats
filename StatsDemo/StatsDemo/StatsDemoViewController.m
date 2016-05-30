@@ -37,7 +37,7 @@
     
     if (!sender.selected) {
         
-        UIImage *image = [UIImage imageNamed:@"m24.png"];
+        UIImage *image = [UIImage imageNamed:@"m24"];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         imageView.center = self.view.center;
         [self.view addSubview:imageView];
@@ -50,8 +50,6 @@
         }
     }
     sender.selected = !sender.selected;
-    
-    [Stats printHierarchyInApp];
 }
 
 
