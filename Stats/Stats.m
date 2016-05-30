@@ -7,17 +7,19 @@
 
 #import "Stats.h"
 #import <mach/mach.h>
+#import <QuartzCore/QuartzCore.h>
 
-#define kTimerInterval 1.0
+
 #define tval2msec(tval) ((tval.seconds * 1000) + (tval.microseconds / 1000))
 
 
 @interface Stats ()
 {
+    CFTimeInterval lastTimestamp;
     uint64_t lastUserTime;
     vm_size_t lastMemSize;
 }
-@property (nonatomic, assign) NSTimer *timer;
+@property (nonatomic, assign) CADisplayLink *displayLink;
 @end
 
 
@@ -35,27 +37,31 @@
         self.textAlignment = NSTextAlignmentLeft;
         self.numberOfLines = 0;
         lastUserTime = 0;
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:kTimerInterval
-                                                      target:self
-                                                    selector:@selector(timerHandler:)
-                                                    userInfo:nil
-                                                     repeats:YES];
-        [self.timer fire];
+        lastTimestamp = CACurrentMediaTime();
+        
+        CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(onTimer:)];
+        displayLink.frameInterval = 30;
+        [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        self.displayLink = displayLink;
+        [self onTimer:self.displayLink];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [self.timer invalidate];
-    self.timer = nil;
+    if (self.displayLink) {
+        [self.displayLink invalidate];
+        self.displayLink = nil;
+    }
 }
 
 
 #pragma mark -------------------------------------------------------------------
 #pragma Private
 
-- (void)updateStates {
+- (void)updateStatesWithInterval:(CFTimeInterval)interval {
+    NSLog(@"interval:%f", interval);
     kern_return_t status;
     mach_msg_type_number_t infoCount;
     
@@ -70,7 +76,7 @@
         return;
     }
     vm_size_t memSize = basicInfo.resident_size;    // Memory usage [bytes]
-    int64_t memSizePerSec = (memSize - lastMemSize) / kTimerInterval;   // Variation of memory usage
+    int64_t memSizePerSec = (memSize - lastMemSize) / interval;   // Variation of memory usage
     lastMemSize = memSize;
     
     struct task_thread_times_info threadTimesInfo;
@@ -84,7 +90,7 @@
         return;
     }
     uint64_t userTime   = tval2msec(threadTimesInfo.user_time);    // CPU time
-    int64_t userTimePerSec = (userTime - lastUserTime) / kTimerInterval;    // Variation of CPU time
+    int64_t userTimePerSec = (userTime - lastUserTime) / interval;    // Variation of CPU time
     lastUserTime = userTime;
     
     self.text = [NSString stringWithFormat:@" MEM:%lld[kB]\n  %lu[kB]\n CPU:%lld[ms]\n Views:%lu",
@@ -167,9 +173,12 @@
 #pragma mark -------------------------------------------------------------------
 #pragma mark Timer Handler
 
-- (void)timerHandler:(NSTimer *)timer {
-    
-    [self updateStates];
+- (void)onTimer:(CADisplayLink *)link
+{
+    CFTimeInterval now = link.timestamp;
+    CFTimeInterval interval = now - lastTimestamp;
+    [self updateStatesWithInterval:interval];
+    lastTimestamp = now;
 }
 
 @end
