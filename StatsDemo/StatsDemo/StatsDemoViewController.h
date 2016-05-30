@@ -3,7 +3,7 @@
 //  StatsDemo
 //
 //  Created by shu223 on 11/04/28.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Shuichi Tsutsumi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

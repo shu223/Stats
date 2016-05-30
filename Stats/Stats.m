@@ -1,8 +1,8 @@
 //
 //  Stats.m
 //
-//  Created by shu223 on 11/04/28.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Shuichi Tsutsumi on 11/04/28.
+//  Copyright 2011 Shuichi Tsutsumi. All rights reserved.
 //
 
 #import "Stats.h"
