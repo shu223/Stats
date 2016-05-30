@@ -15,7 +15,7 @@
 @interface Stats ()
 {
     uint64_t lastUserTime;
-    vm_size_t lastRss;
+    vm_size_t lastMemSize;
 }
 @property (nonatomic, assign) NSTimer *timer;
 @end
@@ -34,13 +34,13 @@
         self.font = [UIFont fontWithName:@"Courier" size:10.0f];
         self.textAlignment = NSTextAlignmentLeft;
         self.numberOfLines = 0;
+        lastUserTime = 0;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:kTimerInterval
                                                       target:self
                                                     selector:@selector(timerHandler:)
                                                     userInfo:nil
                                                      repeats:YES];
         [self.timer fire];
-        lastUserTime = 0;
     }
     return self;
 }
@@ -56,43 +56,44 @@
 #pragma Private
 
 - (void)updateStates {
+    kern_return_t status;
+    mach_msg_type_number_t infoCount;
     
-    struct task_basic_info t_info;
-    mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
-    
-    if (task_info(current_task(), TASK_BASIC_INFO, (task_info_t)&t_info, &t_info_count) != KERN_SUCCESS)
-    {
-        NSLog(@"%s(): Error in task_info(): %s",
-              __FUNCTION__, strerror(errno));
-    }    
-    
-    // メモリ使用量(bytes)
-    vm_size_t rss = t_info.resident_size;
-    
-    // 実行中のスレッドのCPU使用時間
-    struct task_thread_times_info tti;
-    t_info_count = TASK_THREAD_TIMES_INFO_COUNT;
-    kern_return_t status = task_info(current_task(), TASK_THREAD_TIMES_INFO,
-                                     (task_info_t)&tti, &t_info_count);
+    struct task_basic_info basicInfo;
+    infoCount = TASK_BASIC_INFO_COUNT;
+    status = task_info(current_task(),
+                       TASK_BASIC_INFO,
+                       (task_info_t)&basicInfo,
+                       &infoCount);
     if (status != KERN_SUCCESS) {
-        NSLog(@"%s(): Error in task_info(): %s",
-              __FUNCTION__, strerror(errno));
+        NSLog(@"%s(): Error in task_info(): %s", __FUNCTION__, strerror(errno));
         return;
     }
+    vm_size_t memSize = basicInfo.resident_size;    // Memory usage [bytes]
+    int64_t memSizePerSec = (memSize - lastMemSize) / kTimerInterval;   // Variation of memory usage
+    lastMemSize = memSize;
     
-    uint64_t userTime   = tval2msec(tti.user_time);
-    int64_t userTimePerSec = ((int64_t)userTime - lastUserTime) / kTimerInterval;
-    int64_t rssPerSec = ((int64_t)rss - lastRss) / kTimerInterval;
+    struct task_thread_times_info threadTimesInfo;
+    infoCount = TASK_THREAD_TIMES_INFO_COUNT;
+    status = task_info(current_task(),
+                       TASK_THREAD_TIMES_INFO,
+                       (task_info_t)&threadTimesInfo,
+                       &infoCount);
+    if (status != KERN_SUCCESS) {
+        NSLog(@"%s(): Error in task_info(): %s", __FUNCTION__, strerror(errno));
+        return;
+    }
+    uint64_t userTime   = tval2msec(threadTimesInfo.user_time);    // CPU time
+    int64_t userTimePerSec = (userTime - lastUserTime) / kTimerInterval;    // Variation of CPU time
     lastUserTime = userTime;
-    lastRss = rss;
     
-    self.text = [NSString stringWithFormat:@" MEM:%qi[kB]\n  %lu[kB]\n CPU:%qi[ms]\n Views:%d",
-                 rssPerSec / 1000, rss / 1000, userTimePerSec, [self countSubviewsInApp]];
+    self.text = [NSString stringWithFormat:@" MEM:%lld[kB]\n  %lu[kB]\n CPU:%lld[ms]\n Views:%lu",
+                 memSizePerSec / 1000, memSize / 1000, userTimePerSec, (unsigned long)[self countSubviewsInApp]];
 }
 
-- (int)countSubviewsInView:(UIView *)view {
+- (NSUInteger)countSubviewsInView:(UIView *)view {
     
-    int cnt = 0;
+    NSUInteger cnt = 0;
     
     for (UIView *subview in [view subviews]) {
         
