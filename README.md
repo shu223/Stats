@@ -1,15 +1,12 @@
 ##What's Stats
 
-Stats **displays load statuses** such as the memory usage, the CPU load, and the number of UIView subclasses **in the app**, and **in realtime**.
+Stats **displays load statuses** such as the memory usage, the CPU load, and the number of subviews **in-app**, and **in realtime**.
 
 <img src="README_images/stats.png" width="320">
 
-
-Stats" is a class to display set of parameters that indicate the load status such as memory usage, the number of UIView subclasses to create a directly below in real time.
-
 ##How to use
 
-Stats is implemented as a subclass of UILabel, so basically, **just add on your view** to use it.
+**Just add on your view**!
 
 1. Add Stats.h, Stats.m to your project
 2. As with UILabel, add wherever you like.
