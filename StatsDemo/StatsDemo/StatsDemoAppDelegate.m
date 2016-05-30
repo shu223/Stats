@@ -19,7 +19,7 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
 
-    self.stats = [[Stats alloc] initWithFrame:CGRectMake(20, 20, 100.0, 60.0)];
+    self.stats = [[Stats alloc] initWithFrame:CGRectMake(20, 40, 100.0, 60.0)];
     [self.window addSubview:self.stats];
 
     return YES;
